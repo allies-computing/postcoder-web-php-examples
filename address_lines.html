@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>PostCoder Web V3 Example</title>
+		<link rel="stylesheet" type="text/css" href="css/websoap.css" media="screen" />
+	</head>
+	<body>
+		<div id="wsExample">
+			<h1>PostCoder Web V3</h1>
+
+            <div>
+                <p>JavaScript example with request routed via a server-side PHP script, making it possible to secure your account to the 
+                 IP address of your web server – you can do this using the IP Addresses section in the <a href="http://www.postcoder.com/admin">admin area</a>.</p>
+            </div>
+
+            <div class="container">
+    			<h1>Address Lines Example</h1>
+    			<div id="postcodelookup" style="display:none">
+    				<label id="searchText">Enter Postcode</label>
+    				<input id="searchField" class="searchField" type="text" />
+    				<input id="searchButton" class="searchButton" type="button" value="Find Address" />
+                    <div id="selectDropdownDiv" style="display:none">
+                        <label class="control-label" for="addressListSelect">Select an Address:</label>
+                        <select id="addressListSelect"></select>
+                    </div>
+    			</div>
+    			<div>
+    				<form action="#" method="post">
+    					<fieldset>
+                            <label>Organisation</label>
+                            <input id="OrganisationInputField" name="OrganisationInputField" type="text" />
+    						<label>Address</label>
+    						<input id="AddressLine1" name="AddressLine1" type="text" />
+                            <input id="AddressLine2" name="AddressLine2" type="text" />
+                            <input id="AddressLine3" name="AddressLine3" type="text" />
+    						<label>Town</label>
+    						<input id="TownInputField" name="TownInputField" type="text" />
+    						<label>County</label>
+    						<input id="CountyInputField" name="CountyInputField" type="text" />
+    						<label>Postcode</label>
+    						<input id="PostcodeInputField" name="PostcodeInputField" type="text" />
+    					</fieldset>
+    				</form>
+    			</div>
+    			<div class="poweredByGrey">
+    				Powered by <a href="http://www.alliescomputing.com" target="_blank">PostCoder</a> &reg;
+    			</div>
+            </div>
+		</div>
+
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript">
+        
+        var addressData;
+
+        $(function () {
+            $('#postcodelookup').show();
+            $('#searchButton').on('click',lookupAddress); // Adds the lookup the "Lookup Postcode" button
+
+            // Adds the function that sets the other address fields when an address is selected from the drop down
+            $('#addressListSelect').change(function () {
+                AddressJSONtoForm();
+            })
+
+            // Alters the Enter Key Behaviour on the Postcode field to lookup a postcode
+            $('#searchField').keypress(function (e) {
+                if (e.which == 13) {
+                    lookupAddress();
+                    return false;
+                }
+            });
+
+        });
+
+        // Address Lookup function
+        function lookupAddress() {
+
+            var serviceURL = 'PostCoderWeb.php';
+            var identifier = 'v3 PHP JS Example';
+            var numberOfAddressLines = 3;
+
+
+            var addressListDropdown = $('#addressListSelect');
+
+            var lookupValue = encodeURIComponent($('#searchField').val());
+
+            if (lookupValue == '') {
+                return;
+            }
+
+            // Build the RESTful URL
+            var ajaxURL = serviceURL + '?method=address&searchterm=' + lookupValue + '&identifier=' + identifier + '&lines=' + numberOfAddressLines;
+
+            // Make the actual JSON request
+            $.getJSON(ajaxURL, function (data) {
+
+                addressData = data; // data is the return from the query supplied to the "success" function we're now inside.
+
+                if (data.length > 0) { // If there's actually any results then show the result box
+                    $('#selectDropdownDiv').show();
+
+                    // Clear the current dropdown
+                    addressListDropdown.find('option').remove();
+                    addressListDropdown[0].options.add(new Option('Select an Address:','-1'));
+
+                    $.each(data, function (index, value) {
+                        // Iterating through returned Addresses
+                        addressListDropdown[0].options.add(new Option(value.summaryline,index));
+                    })
+                }
+
+            }).fail(function (jqxhr, textStatus, error){
+                if (typeof(console) != "undefined"){
+                    console.error("getJSON failed, status: " + textStatus + ", error: "+error);
+                }
+            });
+        }
+
+
+        // This function puts the various pieces of an address return onto the address form, change the targets to match your form
+        function AddressJSONtoForm(){
+
+            var selectedIndex = $('#addressListSelect :selected').val();
+
+            if (selectedIndex < 0){
+                return;
+            }
+
+            var selectedAddress = addressData[selectedIndex];
+
+            // This block can of course be changed/optimised to whatever is required
+            $('#OrganisationInputField').val(selectedAddress["organisation"]);
+            $('#AddressLine1').val(selectedAddress["addressline1"]);
+            $('#AddressLine2').val(selectedAddress["addressline2"]);
+            $('#AddressLine3').val(selectedAddress["addressline3"]);
+            $('#TownInputField').val(selectedAddress["posttown"]);
+            $('#CountyInputField').val(selectedAddress["county"]);
+            $('#PostcodeInputField').val(selectedAddress["postcode"]);
+
+        }
+
+    </script>
+
+
+
+	</body>
+</html>

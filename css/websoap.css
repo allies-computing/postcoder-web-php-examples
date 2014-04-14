@@ -1,0 +1,117 @@
+/*--- Allies Computing Ltd ---*/
+/* 	websoap.css
+	Version 1.1 
+	31sty May 2012
+
+	Common styles for: 
+	Examples for PostCoder Web V2 Service
+*/
+body {
+	font: 15px/1.5 Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif;
+}
+
+:focus {
+	outline: 0;
+}
+
+input.error{
+	border: 2px solid red;
+}
+
+input.success{
+	border: 2px solid green;
+}
+
+#wsExample {
+	color: #333333;
+	width: 500px;
+	margin: 10px 0px 0px 10px;
+}
+
+#wsExample .container{
+	width: 350px;
+}
+
+#wsExample h1 {
+	font-size: 18px;
+    border-bottom: 1px solid #D0D0D0;
+    color: #444444;
+    margin: 16px 0 8px;
+    padding: 16px 0 6px;
+}
+
+#wsExample form {
+	width: 100%;
+	float: left;
+	overflow: hidden;
+}
+
+#wsExample > div {
+	width: 100%;
+	float: left;
+	margin-bottom: 10px;
+}
+
+#wsExample form div {
+	float: left;
+	clear: both;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+#wsExample input, #wsExample label, #wsExample select {
+	float: left;
+	clear: left;
+}
+
+#wsExample fieldset {
+	border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#wsExample input {
+	height: 26px;
+	width: 97%;
+	margin: 5px 0 4px 0;
+	padding: 0px 3px;
+}
+
+#wsExample label {
+	color: #006699;;
+	font-size: 1em;
+	font-weight: bold;
+	margin: 8px 0 0;
+}
+
+#wsExample select {
+	width: 100%;
+	height: 28px;
+}
+
+#wsExample .searchField{
+	font-size: 1.2em;
+}
+
+#wsExample .searchButton {
+	position: relative;
+	height:34px;
+	width: 50%;	
+	left: 50%;	
+	font-size: 1.2em;
+	cursor: pointer;
+}
+
+.poweredByGrey {
+	width: 350px;
+	font-size: 0.7em;
+	float: left;
+	clear: both; 
+	text-align: right;	
+	color: #545454;
+}
+
+.poweredByGrey a, .poweredByGrey a:visited {
+	color: #E51B24;	
+	text-decoration: none;
+}
