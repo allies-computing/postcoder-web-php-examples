@@ -1,7 +1,7 @@
 PostCoder Web Examples
 ======================
 
-These are examples of how to use the PostCoder Web API system in Javascript using PHP.
+These are examples of how to use the PostCoder Web API system in PHP.
 
 More information on PostCoder Web:-
 http://www.alliescomputing.com/products/postcoder-web-api
