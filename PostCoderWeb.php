@@ -66,7 +66,10 @@ $body = substr($response, $header_size);
 curl_close($session);
 
 // send the response back to the client with the same header received from the service.
-header(strtok($header, "\n"));
+$header_lines = explode("\n",$header);
+foreach($header_lines as $header_line){
+    header($header_line);
+}
 echo $body;
 exit();
 
